@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по анатомии человека</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Анимационные элементы -->
+        <div class="skeleton-animation">
+            <svg viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,20 C60,30 40,50 50,60 C60,70 40,90 50,100 C60,110 40,130 50,140" stroke="rgba(225, 190, 231, 0.2)" stroke-width="2"/>
+                <circle cx="50" cy="20" r="5" fill="rgba(225, 190, 231, 0.3)"/>
+                <circle cx="50" cy="60" r="5" fill="rgba(225, 190, 231, 0.3)"/>
+                <circle cx="50" cy="100" r="5" fill="rgba(225, 190, 231, 0.3)"/>
+                <circle cx="50" cy="140" r="5" fill="rgba(225, 190, 231, 0.3)"/>
+            </svg>
+        </div>
+        <div class="organ-animation"></div>
+        <div class="heart-animation">
+            <svg viewBox="0 0 100 100" fill="rgba(225, 190, 231, 0.2)">
+                <path d="M50,30 A20,20 0,0,1 70,50 C70,50 50,70 50,70 C50,70 30,50 30,50 A20,20 0,0,1 50,30"/>
+            </svg>
+        </div>
+        
+        <!-- Главный экран -->
+        <div class="screen active" id="mainScreen">
+            <div class="header">
+                <h1><i class="fas fa-bone"></i> ТЕСТ ПО АНАТОМИИ ЧЕЛОВЕКА</h1>
+                <p>Проверьте свои знания по анатомии органов, систем и костно-мышечного аппарата</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <h3><i class="fas fa-book"></i> База вопросов:</h3>
+                        <span class="stat-value" id="totalQuestions">200 вопросов</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-trophy"></i> Лучший результат:</h3>
+                        <span class="stat-value" id="bestScore">0/30</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-chart-line"></i> Последний результат:</h3>
+                        <span class="stat-value" id="lastScore">0/30</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3><i class="fas fa-stopwatch"></i> Лучшее время:</h3>
+                        <span class="stat-value" id="bestTime">0 сек</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="buttons-container">
+                <button class="btn btn-start" id="startTestBtn">
+                    <i class="fas fa-play-circle"></i> НАЧАТЬ ТЕСТ
+                    <br><small>200 вопросов → 30 случайных</small>
+                </button>
+                <button class="btn btn-secondary" id="historyBtn">
+                    <i class="fas fa-history"></i> ИСТОРИЯ РЕЗУЛЬТАТОВ
+                </button>
+            </div>
+            
+            <div class="total-questions" style="text-align: center; margin-top: 20px; color: var(--accent);">
+                <i class="fas fa-info-circle"></i> Тест включает вопросы по всем системам организма человека
+            </div>
+        </div>
+        
+        <!-- Экран теста -->
+        <div class="screen" id="testScreen">
+            <div class="test-header">
+                <button class="home-btn" id="testHomeBtn">
+                    <i class="fas fa-home"></i> Главная
+                </button>
+                <h2>Вопрос <span id="currentQuestionNumber">1</span>/30</h2>
+                <div class="timer-container" id="timerContainer">
+                    <i class="fas fa-clock"></i>
+                    <div class="timer" id="timer">30</div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-text" id="questionText">
+                    Загрузка вопроса...
+                </div>
+                
+                <div class="options-container" id="optionsContainer">
+                    <!-- Варианты ответов будут вставлены сюда -->
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Прогресс теста</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Экран результатов -->
+        <div class="screen" id="resultsScreen">
+            <div class="result-container">
+                <h2 class="result-title">ТЕСТ ЗАВЕРШЕН</h2>
+                <div class="result-score" id="finalScore">0/30</div>
+                
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Правильные ответы:</span>
+                        <span class="stat-value" id="correctAnswers">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Неправильные ответы:</span>
+                        <span class="stat-value" id="wrongAnswers">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Затраченное время:</span>
+                        <span class="stat-value" id="timeSpent">0 секунд</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Процент правильных:</span>
+                        <span class="stat-value" id="percentage">0%</span>
+                    </div>
+                </div>
+                
+                <div class="result-comment" id="resultComment">
+                    Оценка загружается...
+                </div>
+                
+                <div class="buttons-container">
+                    <button class="btn btn-primary" id="backToMainBtn">
+                        <i class="fas fa-home"></i> ГЛАВНАЯ
+                    </button>
+                    <button class="btn btn-secondary" id="restartTestBtn">
+                        <i class="fas fa-redo"></i> ПОВТОРИТЬ ТЕСТ
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Экран истории -->
+        <div class="screen" id="historyScreen">
+            <div class="history-header">
+                <button class="back-btn" id="backFromHistoryBtn">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <h2>История тестов</h2>
+                <button class="btn-secondary" id="clearHistoryBtn" style="padding: 8px 16px; font-size: 0.9rem;">
+                    <i class="fas fa-trash"></i> Очистить
+                </button>
+            </div>
+            
+            <div class="history-container" id="historyContainer">
+                <!-- История тестов будет вставлена сюда -->
+            </div>
+            
+            <div class="empty-history" id="emptyHistoryMessage" style="display: none;">
+                <i class="fas fa-history fa-3x" style="margin-bottom: 20px; opacity: 0.5;"></i>
+                <p>Нет результатов тестов</p>
+                <p style="font-size: 1rem; margin-top: 10px;">Пройдите тест, чтобы увидеть историю результатов</p>
+            </div>
+        </div>
+        
+        <!-- Модальное окно подтверждения -->
+        <div class="modal-overlay" id="confirmationModal">
+            <div class="modal">
+                <h3>Выйти из теста?</h3>
+                <p>Если вы выйдете сейчас, текущие результаты не будут сохранены и тест придется начать заново.</p>
+                <div class="modal-buttons">
+                    <button class="modal-btn confirm" id="confirmExitBtn">Да, выйти</button>
+                    <button class="modal-btn cancel" id="cancelExitBtn">Нет, продолжить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
